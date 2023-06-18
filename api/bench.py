@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-apiUrl = os.getenv("BENCH_API_URL")
+apiUrl = os.getenv("SERVER_API_URL")
 
 def getProducts():
   return json.loads(requests.get(f'{apiUrl}/products/with-min-price/for-all').content)

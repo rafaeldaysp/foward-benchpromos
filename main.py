@@ -30,7 +30,7 @@ def main():
       lastState = db.conditionalFetchTable(TABLE_NAME, "lastPrice", "lastAvailable", productId=product['id'])
       lastPrice = lastState[0][0]
       lastAvailable = lastState[0][1]
-      if product['price'] != lastPrice or lastAvailable == False:
+      if abs(product['price'] - lastPrice) > 1000 or lastAvailable == False:
         print(f"{product['title']}\n{lastPrice} -> {product['price']} < {product['reference_price']}")
         telegram.sendPhoto(product['image_url'], MessageFormatter(product, sales))
         updateDatabaseProduct(product, db)

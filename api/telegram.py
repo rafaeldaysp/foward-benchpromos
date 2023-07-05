@@ -8,8 +8,6 @@ load_dotenv()
 token, chatId = (os.getenv('TELEGRAM_BOT_TOKEN'), os.getenv('TELEGRAM_CHAT_ID'))
 baseUrl = f'https://api.telegram.org/bot{token}'
 
-chatId = -829144465 # mudar isso depois
-
 def sendPhoto(imageUrl: str, caption: str, productId: str) -> None:
   res = requests.post(f'{baseUrl}/sendPhoto', data={
     "photo": imageUrl,

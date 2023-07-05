@@ -4,7 +4,7 @@ def MessageFormatter(product: dict, sales: list):
   if product['cashback']: priceWithoutCashback = 'R$ {:,.2f}'.format(product['price']/(100-product['cashback']['value'])).replace('.', '-').replace(',', '.').replace('-', ',')
   for sale in sales:
     if sale["product_id"] and sale["product_id"] == product['id']: 
-      specsFromSale = sale["specs"].replace('🔴', '')
+      specsFromSale = '🔴' + sale["specs"].replace('🔴', '') + '🔴'
       break
   price = 'R$ {:,.2f}'.format(product['price']/100).replace('.', '-').replace(',', '.').replace('-', ',')
   finalPrice = price
@@ -13,6 +13,6 @@ def MessageFormatter(product: dict, sales: list):
   link = f'https://benchpromos.com/produto/{product["id"]}'
   cashback = f'🟢 Tem {product["cashback"]["value"]}% de Cashback usando o {product["cashback"]["name"]}, se você não utiliza, entra aqui >\
   {product["cashback"]["affiliatedLink"]} 🟢' if product['cashback'] else ''
-  telegramMessage = f"🔥 {product['title']} - {price} 🔥\n\n {'🔴 ' + specsFromSale + ' 🔴' if specsFromSale else ''} \n {coupon}💸 {finalPrice}\n\n🔗 {link}\n\n{cashback}"
+  telegramMessage = f"🔥 {product['title']} - {price} 🔥\n\n {specsFromSale if specsFromSale else ''} {coupon}💸 {finalPrice}\n\n🔗 {link}\n\n{cashback}"
 
   return telegramMessage

@@ -32,7 +32,8 @@ def main():
       lastAvailable = lastState[0][1]
       if abs(product['price'] - lastPrice) > 1000 or lastAvailable == False:
         print(f"{product['title']}\n{lastPrice} -> {product['price']} < {product['reference_price']}")
-        telegram.sendPhoto(product['image_url'], MessageFormatter(product, sales))
+        
+        telegram.sendPhoto(product['image_url'], MessageFormatter(product, sales), product['id'])
         updateDatabaseProduct(product, db)
         time.sleep(1)
 

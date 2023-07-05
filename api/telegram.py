@@ -1,12 +1,30 @@
 import requests
 import os
+import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 token, chatId = (os.getenv('TELEGRAM_BOT_TOKEN'), os.getenv('TELEGRAM_CHAT_ID'))
 baseUrl = f'https://api.telegram.org/bot{token}'
 
-def sendPhoto(imageUrl: str, caption: str) -> None:
-  requests.post(f'{baseUrl}/sendPhoto', data={
+chatId = -829144465 # mudar isso depois
+
+def sendPhoto(imageUrl: str, caption: str, productId: str) -> None:
+  res = requests.post(f'{baseUrl}/sendPhoto', data={
     "photo": imageUrl,
     "caption": caption,
-    "chat_id": chatId
-  }) 
+    "chat_id": chatId,
+    "reply_markup": json.dumps({
+      "inline_keyboard": [
+      [
+        {
+          "text": "Postar",
+          "callback_data": productId
+            
+        }
+      ]
+    ]
+      })
+  })
+  print(res.content)

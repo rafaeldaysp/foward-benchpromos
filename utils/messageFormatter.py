@@ -4,7 +4,7 @@ def MessageFormatter(product: dict, sales: list):
   if product['cashback']: priceWithoutCashback = 'R$ {:,.2f}'.format(product['price']/(100-product['cashback']['value'])).replace('.', '-').replace(',', '.').replace('-', ',')
   for sale in sales:
     if sale["product_id"] and sale["product_id"] == product['id']: 
-      specsFromSale = '🔴' + sale["specs"].replace('🔴', '') + '🔴\n'
+      specsFromSale = '🔴' + sale["specs"].replace('🔴', '') + '🔴\n\n'
       break
   price = 'R$ {:,.2f}'.format(product['price']/100).replace('.', '-').replace(',', '.').replace('-', ',')
   finalPrice = price

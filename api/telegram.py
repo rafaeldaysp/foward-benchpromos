@@ -13,6 +13,7 @@ def sendPhoto(imageUrl: str, caption: str, productId: str) -> None:
     "photo": imageUrl,
     "caption": caption,
     "chat_id": chatId,
+    "parse_mode": "Markdown",
     "reply_markup": json.dumps({
       "inline_keyboard": [
       [

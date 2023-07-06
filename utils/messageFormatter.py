@@ -9,7 +9,7 @@ def MessageFormatter(product: dict, sales: list):
   price = 'R$ {:,.2f}'.format(product['price']/100).replace('.', '-').replace(',', '.').replace('-', ',')
   finalPrice = price
   if priceWithoutCashback: finalPrice =  priceWithoutCashback + ' (Sem Cashback)\n💰 ' + price + ' (Com Cashback)'
-  coupon = f'🎟 Cupom: {product["coupon"]["code"]}\n' if product['coupon'] else ''
+  coupon = f'🎟 Cupom: `{product["coupon"]["code"]}`\n' if product['coupon'] else ''
   link = f'https://benchpromos.com/produto/{product["id"]}'
   cashback = f'🟢 Tem {product["cashback"]["value"]}% de Cashback usando o {product["cashback"]["name"]}, se você não utiliza, entra aqui >\
   {product["cashback"]["affiliatedLink"]} 🟢' if product['cashback'] else ''

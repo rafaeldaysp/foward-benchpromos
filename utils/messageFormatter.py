@@ -1,18 +1,23 @@
+from utils.priceCalculattor import priceCalculator
+
 def MessageFormatter(product: dict, sales: list):
+  deal = product['deals'][0]
+  dealPrice = priceCalculator(deal['price'], deal['coupon']['discount'] if deal['coupon'] and deal['coupon']['availability'] else None, deal['cashback']['value'] if deal['cashback'] else None)
+  dealInstallmentPrice = priceCalculator(deal['totalInstallmentPrice'], deal['coupon']['discount'] if deal['coupon'] and deal['coupon']['availability'] else None, deal['cashback']['value'] if deal['cashback'] else None) if deal['totalInstallmentPrice'] else None
+  dealInstallments = deal['installments']
   specsFromSale = None
-  priceWithoutCashback = None
-  if product['cashback']: priceWithoutCashback = 'R$ {:,.2f}'.format(product['price']/(100-product['cashback']['value'])).replace('.', '-').replace(',', '.').replace('-', ',')
   for sale in sales:
-    if sale["product_id"] and sale["product_id"] == product['id'] and sale['specs']: 
-      specsFromSale = '🔴 ' + sale["specs"].replace('🔴', '').strip() + ' 🔴\n\n'
+    if sale["productSlug"] and sale["productSlug"] == product['slug'] and sale['caption']: 
+      specsFromSale = '🔴 ' + sale["caption"].replace('🔴', '').strip() + ' 🔴\n\n'
       break
-  price = 'R$ {:,.2f}'.format(product['price']/100).replace('.', '-').replace(',', '.').replace('-', ',')
-  finalPrice = price
-  if priceWithoutCashback: finalPrice =  priceWithoutCashback + ' (Sem Cashback)\n💰 ' + price + ' (Com Cashback)'
-  coupon = f'🎟 Cupom: `{product["coupon"]["code"]}`\n' if product['coupon'] else ''
-  link = f'https://benchpromos.com/produto/{product["id"]}'
-  cashback = f'🟢 Tem {product["cashback"]["value"]}% de Cashback usando o {product["cashback"]["name"]}, se você não utiliza, entra aqui >\
-  {product["cashback"]["affiliatedLink"]} 🟢' if product['cashback'] else ''
-  telegramMessage = f"🔥 {product['title']} - {price} 🔥\n\n{specsFromSale if specsFromSale else ''} {coupon}💸 {finalPrice}\n\n🔗 {link}\n\n{cashback}"
+  price = 'R$ {:,.2f}'.format(dealPrice/100).replace('.', '-').replace(',', '.').replace('-', ',')
+  dealInstallmentPrice = 'R$ {:,.2f}'.format(dealInstallmentPrice/100).replace('.', '-').replace(',', '.').replace('-', ',') if dealInstallmentPrice else None
+  coupon = f'🎟 Cupom: `{deal["coupon"]["code"]}`\n' if deal['coupon'] else ''
+  priceField = price
+  if dealInstallments and dealInstallments > 1: priceField =  price + f' (À Vista {"Com Cupom" if coupon else ""})\n💰 ' + dealInstallmentPrice + f' (Parcelado em até {dealInstallments}x)'
+  link = f'https://benchpromos.com/{product["category"]["slug"]}/{product["slug"]}'
+  cashback = f'🟢 Tem {deal["cashback"]["value"]}% de Cashback usando o {deal["cashback"]["provider"]}, se você não utiliza, entra aqui >\
+  {deal["cashback"]["affiliatedUrl"]} 🟢' if deal['cashback'] else ''
+  telegramMessage = f"🔥 {product['name']} - {price} 🔥\n\n{specsFromSale if specsFromSale else ''} {coupon}💸 {priceField}\n\n🔗 {link}\n\n{cashback}"
 
   return telegramMessage

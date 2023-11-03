@@ -16,7 +16,7 @@ def MessageFormatter(product: dict, sales: list):
   priceField = price
   if dealInstallments and dealInstallments > 1: priceField =  price + f' (À Vista {"Com Cupom" if coupon else ""})\n💰 ' + dealInstallmentPrice + f' (Parcelado em até {dealInstallments}x)'
   link = f'https://benchpromos.com/{product["category"]["slug"]}/{product["slug"]}'
-  cashback = f'🟢 Tem {deal["cashback"]["value"]}% de Cashback usando o {deal["cashback"]["provider"]}, se você não utiliza, entra aqui >\
+  cashback = f'🟢 Tem {deal["cashback"]["value"]}% de Cashback usando {deal["cashback"]["provider"]}, se você não utiliza, entra aqui >\
   {deal["cashback"]["affiliatedUrl"]} 🟢' if deal['cashback'] else ''
   telegramMessage = f"🔥 {product['name']} - {price} 🔥\n\n{specsFromSale if specsFromSale else ''} {coupon}💸 {priceField}\n\n🔗 {link}\n\n{cashback}"
 

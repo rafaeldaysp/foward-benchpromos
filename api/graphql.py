@@ -61,6 +61,7 @@ GET_PRODUCTS = """
             }
             coupon {
               discount
+              code
               availability
             }
             cashback {

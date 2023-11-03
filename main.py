@@ -36,7 +36,6 @@ def main():
   for product in products:
     deal = product['deals'][0]
     dealPrice = priceCalculator(deal['price'], deal['coupon']['discount'] if deal['coupon'] and deal['coupon']['availability'] else None, deal['cashback']['value'] if deal['cashback'] else None)
-    print(f"{product['name']} : {dealPrice}")
     if product['referencePrice'] and dealPrice < product['referencePrice'] and deal['availability']:
       lastState = db.conditionalFetchTable(TABLE_NAME, "lastPrice", "lastAvailable", productId=product['id'])
       lastPrice = lastState[0][0]

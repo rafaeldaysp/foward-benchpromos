@@ -12,7 +12,7 @@ def MessageFormatter(product: dict, sales: list):
       break
   price = 'R$ {:,.2f}'.format(dealPrice/100).replace('.', '-').replace(',', '.').replace('-', ',')
   dealInstallmentPrice = 'R$ {:,.2f}'.format(dealInstallmentPrice/100).replace('.', '-').replace(',', '.').replace('-', ',') if dealInstallmentPrice else None
-  coupon = f'🎟 Cupom: `{deal["coupon"]["code"]}`\n' if deal['coupon'] else ''
+  coupon = f'🎟 Cupom: `{deal["coupon"]["code"]}`\n' if deal['coupon'] and deal['coupon']['availability'] else ''
   priceField = price
   if dealInstallments and dealInstallments > 1: priceField =  price + f' (À Vista{" Com Cupom" if coupon else ""})\n💰 ' + dealInstallmentPrice + f' (Parcelado em até {dealInstallments}x)'
   link = f'https://benchpromos.com/{product["category"]["slug"]}/{product["slug"]}'

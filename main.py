@@ -12,6 +12,8 @@ def syncDatabaseProducts(products: list, db: Database):
   dbProducts = db.fetchTable(TABLE_NAME, "productId")
   dbProductsId = [dbProduct[0] for dbProduct in dbProducts]
   for product in products:
+    if not product['deals']:
+      continue
     deal = product['deals'][0]
     if product["id"] not in dbProductsId:
       db.insertIntoTable(TABLE_NAME, productId=product['id'], lastPrice=priceCalculator(deal['price'], deal['coupon']['discount'] if deal['coupon'] and deal['coupon']['availability'] else None, deal['cashback']['value'] if deal['cashback'] else None), lastAvailable=1 if deal['availability'] else 0)

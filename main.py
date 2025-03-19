@@ -36,6 +36,8 @@ def main():
   syncDatabaseProducts(products, db)
 
   for product in products:
+    if not product['deals']:
+      continue
     deal = product['deals'][0]
     dealPrice = priceCalculator(deal['price'], deal['coupon']['discount'] if deal['coupon'] and deal['coupon']['availability'] else None, deal['cashback']['value'] if deal['cashback'] else None)
     if product['referencePrice'] and dealPrice < product['referencePrice'] and deal['availability']:

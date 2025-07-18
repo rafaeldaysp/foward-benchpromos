@@ -69,6 +69,12 @@ GET_PRODUCTS = """
               provider
               affiliatedUrl
             }
+            discounts {
+              id
+              discount
+              label
+              description
+            }
           }
         }
       }
@@ -135,6 +141,12 @@ GET_DEALS = """
         code
         discount
         availability
+      }
+      discounts {
+        id
+        discount
+        label
+        description
       }
     }
   }

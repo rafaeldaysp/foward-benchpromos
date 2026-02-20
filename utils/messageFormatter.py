@@ -18,6 +18,6 @@ def MessageFormatter(product: dict, sales: list):
   link = f'https://benchpromos.com/{product["category"]["slug"]}/{product["slug"]}'
   cashback = f'🟢 Tem {deal["cashback"]["value"]}% de Cashback usando {deal["cashback"]["provider"]}, se você não utiliza, entra aqui >\
   {deal["cashback"]["affiliatedUrl"]} 🟢' if deal['cashback'] else ''
-  telegramMessage = f"🔥 {product['name']} - {price} #anúncio🔥\n\n{specsFromSale if specsFromSale else ''} {coupon}💸 {priceField}\n\n🔗 {link}\n\n{cashback}"
+  telegramMessage = f"🔥 {product['name']} - {price} 🔥 #anúncio\n\n{specsFromSale if specsFromSale else ''} {coupon}💸 {priceField}\n\n🔗 {link}\n\n{cashback}"
 
   return telegramMessage
